@@ -31,18 +31,22 @@ function draw(h) {
 }
 
 function generate() {
-  var newgen = [];
+  var newgen = [],
+      end = cells.length -1;
+  
   for(var i=0; i < cells.length; i++) {
-    l = cells[i-1];
+    l = i === 0 ? 0 : cells[i-1];
     c = cells[i];
-    r = cells[i+1];
+    r = i === end ? end : cells[i+1];
     newgen[i] = rules(l, c, r);
   }
   cells = newgen;
 }
 
+for (var g=0; g < gens; g++) {
+  console.log('gen: ' + g + ' of ' + gens);
 for (var i=0; i < gens; i++) {
-  draw(i);
+  draw(g);
   generate();  
 }
 
