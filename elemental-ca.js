@@ -1,50 +1,54 @@
-var w = 600,
-    gens = 800;
+Cell = function(opts) {
+    this.opts = opts || {};
+    this._w = this.opts.width || 600;
+    this._gens = this.opts.width ||800;
 
-var c = document.getElementById('cs');
-var ctx = c.getContext('2d');
+    this.c = document.getElementById('cs');
+    this.ctx = c.getContext('2d');
 
-var ruleset = [0,1,0,1,1,0,1,0].reverse();
+    this._ruleset = [0,1,0,1,1,0,1,0].reverse();
+    this._cells = [];
 
-var cells = [];
-for (var i=0; i<w; i++) {
-  cells[i] = 0;
-}
-cells[Math.ceil(w/2)] = 1;
-
-function rules(l,c,r) {
-  var rule = '' + l + c + r;
-  return ruleset[parseInt(rule, 2)];
-}
-
-function draw(h) {
-  var size=1;
-  for (var i =0; i < cells.length; i++) {
-    if (cells[i] === 0) {
-      ctx.fillStyle = 'rgb(100,200,200)';
-    } else {
-      ctx.fillStyle = 'rgb(100,55,100)';
+    for (var i=0; i<this._w; i++) {
+      this._cells[i] = 0;
     }
+    this._cells[Math.ceil(this._w/2)] = 1;
+};
 
-    ctx.fillRect(i*size,h*size,size,size);
+Cell.prototype.rules = function(l,c,r) {
+     var rule = '' + l + c + r;
+     return ruleset[parseInt(rule, 2)];
+}
+
+Cell.prototype.draw = function(h) {
+    var size = this.opts.size || 1;
+    for (var i =0; i < this._cells.length; i++) {
+      if (this._cells[i] === 0) {
+        this.ctx.fillStyle = 'rgb(100,200,200)';
+      } else {
+        this.ctx.fillStyle = 'rgb(100,55,100)';
+      }
+
+      this.ctx.fillRect(i*size,h*size,size,size);
   }
 }
 
-function generate() {
-  var newgen = [],
-      end = cells.length -1;
-  
-  for(var i=0; i < cells.length; i++) {
-    l = i === 0 ? 0 : cells[i-1];
-    c = cells[i];
-    r = i === end ? end : cells[i+1];
-    newgen[i] = rules(l, c, r);
-  }
-  cells = newgen;
+Cell.prototype.generate = function() {
+    var newgen = [],
+        end = this._cells.length -1;
+    
+    for(var i=0; i <= end ; i++) {
+      l = i === 0 ? 0 : this._cells[i-1];
+      c = cells[i];
+      r = i === end ? end : this._cells[i+1];
+      newgen[i] = this.rules(l, c, r);
+    }
+    this._cells = newgen;
 }
 
-for (var g=0; g < gens; g++) {
-  draw(g);
-  generate();  
+Cell.prototype.renderComplete = function() {
+    for (var g=0; g < this._gens; g++) {
+      this.draw(g);
+      this.generate();  
+    }
 }
-
