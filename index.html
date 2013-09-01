@@ -4,8 +4,15 @@
 <meta charset=utf-8 />
 <title>Canvas</title>
 <script src="elemental-ca.js"></script>
+<script>
+   
+    function start() {
+        var c = new Cell();
+        c.renderComplete();
+    }
+</script>
 </head>
-<body>
+<body onload="start()">
   <canvas id="cs" height="800" width="600"></canvas>
 </body>
 </html>
