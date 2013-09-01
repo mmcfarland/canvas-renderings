@@ -1,5 +1,5 @@
-var w = 300,
-    gens = 10;
+var w = 600,
+    gens = 800;
 
 var c = document.getElementById('cs');
 var ctx = c.getContext('2d');
@@ -18,15 +18,14 @@ function rules(l,c,r) {
 }
 
 function draw(h) {
-  var size=2;
+  var size=1;
   for (var i =0; i < cells.length; i++) {
     if (cells[i] === 0) {
-      ctx.fillStyle = 'rgb(200,200,100)';
+      ctx.fillStyle = 'rgb(100,200,200)';
     } else {
-      ctx.fillStyle = 'rgb(0,155,100)';
-      console.log(i);
+      ctx.fillStyle = 'rgb(100,55,100)';
     }
-    
+
     ctx.fillRect(i*size,h*size,size,size);
   }
 }
