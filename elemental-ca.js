@@ -44,7 +44,6 @@ function generate() {
 }
 
 for (var g=0; g < gens; g++) {
-  console.log('gen: ' + g + ' of ' + gens);
   draw(g);
   generate();  
 }
