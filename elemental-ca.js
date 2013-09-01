@@ -4,7 +4,7 @@ Cell = function(opts) {
     this._gens = this.opts.width ||800;
 
     this.c = document.getElementById('cs');
-    this.ctx = c.getContext('2d');
+    this.ctx = this.c.getContext('2d');
 
     this._ruleset = [0,1,0,1,1,0,1,0].reverse();
     this._cells = [];
@@ -17,7 +17,7 @@ Cell = function(opts) {
 
 Cell.prototype.rules = function(l,c,r) {
      var rule = '' + l + c + r;
-     return ruleset[parseInt(rule, 2)];
+     return this._ruleset[parseInt(rule, 2)];
 }
 
 Cell.prototype.draw = function(h) {
@@ -39,7 +39,7 @@ Cell.prototype.generate = function() {
     
     for(var i=0; i <= end ; i++) {
       l = i === 0 ? 0 : this._cells[i-1];
-      c = cells[i];
+      c = this._cells[i];
       r = i === end ? end : this._cells[i+1];
       newgen[i] = this.rules(l, c, r);
     }
